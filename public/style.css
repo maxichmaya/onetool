@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  outline: 0;
+}
+
+input {
+  margin: 20px;
+  padding: 10px;
+  border: 2px double lightblue;
+}
+
+button {
+  background-color: lightblue;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+h1 {
+  color: lightblue;
+  margin: 20px;
+}

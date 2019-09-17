@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Registration page</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+      var RecaptchaOptions = {
+        lang: "en"
+      };
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  </head>
+  <body>
+    <h1>Registration</h1>
+    <form action="/register" method="post" language="en">
+      <input name="username" placeholder="username" type="text" />
+      <input
+        name="email"
+        placeholder="email"
+        type="email"
+        oninput="checkEmail(value)"
+      />
+      <div class="failedmessage"></div>
+      <div class="successmessage"></div>
+      <br />
+
+      <div
+        class="g-recaptcha"
+        data-sitekey="6LcmgbgUAAAAAKIekbgOLw3EEM7ISE4tNZ5Xya5k"
+      ></div>
+      <input type="submit" value="Submit" />
+    </form>
+    <script>
+      function checkEmail(value) {
+        $.ajax({
+          type: "GET",
+          dataType: "text",
+          url: `https://disposable.debounce.io/?email=${value}`,
+          async: false,
+          success: function(data) {
+            var jsonobj = JSON.parse(data);
+            var derror = jsonobj.debounce && jsonobj.debounce.error;
+            if (derror != undefined) {
+              $(".failedmessage").html("<p>Invalid Email</p>");
+              return false;
+            } else if (jsonobj.disposable && jsonobj.disposable == "false") {
+              $(".failedmessage").remove();
+              $(".successmessage").html("<p>Vaild Email...continue</p>");
+            }
+          },
+          error: function(error) {
+            console.log("error:", error);
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
